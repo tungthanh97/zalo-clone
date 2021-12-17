@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "server": "nodemon server"
+    "server": "nodemon server --delay 500ms ",
+    "kill": "pkill -f nodemon"
   },
   "author": "Tung",
   "license": "MIT",

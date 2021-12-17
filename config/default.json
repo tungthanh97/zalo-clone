@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://ichigofan:ichigo100@mern.k0s8y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "jwtSecret": "ichigofan"
+}
