@@ -1,6 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
-
+const { handleError } = require('./exception');
+const routes = require('./modules');
 const app = express();
 
 //Connect Database
@@ -12,11 +13,9 @@ app.use(express.json({ extended: false }));
 
 app.get('/', (req, res) => res.send('API Runing'));
 
-//Define routes
-app.use('/api/users', require('./routes/api/users'));
-app.use('/api/auth', require('./routes/api/auth'));
-app.use('/api/profile', require('./routes/api/profile'));
-app.use('/api/posts', require('./routes/api/posts'));
+routes(app);
+
+app.use(handleError);
 
 const PORT = process.env.PORT || 5000;
 

@@ -1,4 +1,6 @@
 {
-  "mongoURI": "mongodb+srv://ichigofan:ichigo100@mern.k0s8y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-  "jwtSecret": "ichigofan"
+  "MONGO_URI": "mongodb+srv://ichigofan:ichigo100@mern.k0s8y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "JWT_SECRET": "ichigofan",
+  "JWT_LIFE_ACCESS_TOKEN": "3d",
+  "JWT_LIFE_REFRESH_TOKEN": "90d"
 }
