@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-const { BadRequestError } = require('../exception');
-const User = require('../modules/user/model');
+const { BadRequestError } = require('../modules/exception');
+const User = require('../modules/auth/model');
 const config = require('config');
 const refreshTokenLife = config.get('JWT_LIFE_REFRESH_TOKEN');
 const accessTokenLife = config.get('JWT_LIFE_ACCESS_TOKEN');
@@ -13,19 +13,26 @@ const tokenUtils = {
       expiresIn: tokenLifetime,
     });
   },
-  async generateAndUpdateAccessAndRefreshToken(_id) {
-    const token = await this.generateToken({ _id }, accessTokenLife);
+
+  async generateAndUpdateAccessAndRefreshToken(_id, source) {
+    const accessToken = await this.generateToken({ _id }, accessTokenLife);
     const refreshToken = await this.generateToken({ _id }, refreshTokenLife);
-    await User.updateOne({ _id }, { $set: { name: 'test' } });
+    await User.updateOne({ _id }, { $pull: { refreshTokens: { source } } });
+    await User.updateOne(
+      { _id },
+      { $push: { refreshTokens: { token: refreshToken, source } } },
+    );
+
     return {
-      token,
+      accessToken,
       refreshToken,
     };
   },
+
   verifyToken: async (token) => {
     if (!token) return new BadRequestError('Token invalid');
 
-    return await jwt.verify(token, jwtSecret);
+    return jwt.verify(token, jwtSecret);
   },
 };
 

@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node server",
     "server": "nodemon server --delay 500ms ",
-    "kill": "pkill -f nodemon"
+    "client": "npm start --prefix zalo-reactjs",
+    "kill": "pkill -f nodemon",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Tung",
   "license": "MIT",
@@ -17,6 +19,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "config": "^3.3.6",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-validator": "^6.13.0",
     "gravatar": "^1.8.2",

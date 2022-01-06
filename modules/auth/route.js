@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const authController = require('./controller');
 //@route    GET POST api/auth
-router.post('/', authController.login);
+router.post('/login', authController.login);
+router.post('/auto-login', authController.autoLogin);
+router.post('/register', authController.register);
 router.post('/refresh-token', authController.refreshToken);
 
 // router.get('/user/:username', auth, async (req, res) => {

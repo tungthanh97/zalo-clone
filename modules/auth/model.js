@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
-  name: {
+  username: {
     type: String,
     required: true,
     trim: true,
   },
-
-  email: {
+  phone: {
     type: String,
     required: true,
     unique: true,
@@ -17,7 +16,12 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   refreshTokens: {
-    type: [String],
+    type: [
+      {
+        token: String,
+        source: String,
+      },
+    ],
     default: [],
   },
   avatar: {

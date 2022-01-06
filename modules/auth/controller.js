@@ -1,29 +1,63 @@
 const authService = require('./service');
+const { catchAsync } = require('../../utils/exceptionUtils');
 
 class AuthController {
-  async login(req, res, next) {
-    const { email, password } = req.body;
+  // [POST] /login
+  login = catchAsync(async (req, res) => {
+    const { phone, password } = req.body;
+    const source = req.headers['user-agent'];
+
+    const { accessToken, refreshToken } = await authService.login(
+      phone,
+      password,
+      source,
+    );
+    res.json({ accessToken, refreshToken });
+  });
+
+  // [POST] /auto-login
+  autoLogin = catchAsync(async (req, res) => {
+    const { _id, refreshToken } = req.body;
+    const source = req.headers['user-agent'];
+
+    const authResponse = await authService.checkAndGenerateToken(
+      _id,
+      refreshToken,
+      source,
+    );
+    res.json(authResponse);
+  });
+
+  // [POST] /register
+  register = catchAsync(async (req, res, next) => {
+    const { username, phone, password } = req.body;
+    const source = req.headers['user-agent'];
 
     try {
-      const { token, refreshToken } = await authService.login(email, password);
-      res.json({ token, refreshToken });
+      const authResponse = await authService.register(
+        username,
+        phone,
+        password,
+        source,
+      );
+
+      res.json(authResponse);
     } catch (err) {
       next(err);
     }
-  }
+  });
 
   // [POST] /refresh-token
-  async refreshToken(req, res, next) {
-    const { refreshToken } = req.body;
+  refreshToken = catchAsync(async (req, res) => {
+    const { refreshToken: token } = req.body;
+    const source = req.headers['user-agent'];
 
-    try {
-      const token = await authService.refreshToken(refreshToken);
-
-      res.json({ token });
-    } catch (err) {
-      next(err);
-    }
-  }
+    const { accessToken, refreshToken } = await authService.refreshToken(
+      token,
+      source,
+    );
+    res.json({ accessToken, refreshToken });
+  });
 }
 
 module.exports = new AuthController();
