@@ -1,6 +1,10 @@
 {
-  "MONGO_URI": "mongodb+srv://ichigofan:ichigo100@mern.k0s8y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-  "JWT_SECRET": "ichigofan",
-  "JWT_LIFE_ACCESS_TOKEN": "3d",
-  "JWT_LIFE_REFRESH_TOKEN": "90d"
+    "MONGO_URI": "mongodb+srv://ichigofan:ichigo100@mern.k0s8y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "JWT_SECRET": "ichigofan",
+    "JWT_LIFE_ACCESS_TOKEN": "3d",
+    "JWT_LIFE_REFRESH_TOKEN": "90d",
+    "BALANCE_API_URL": "http://rest.esms.vn/MainService.svc/json/GetBalance_json",
+    "SMS_OTP_API_URL": "http://rest.esms.vn/MainService.svc/json/SendMultipleMessage_V4_get",
+    "SMS_API_KEY": "F3574F44C81E610B9092284469EEDE",
+    "SMS_API_SECRET": "37D0F9446C85ECDD8BB35987459752"
 }

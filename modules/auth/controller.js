@@ -2,62 +2,76 @@ const authService = require('./service');
 const { catchAsync } = require('../../utils/exceptionUtils');
 
 class AuthController {
-  // [POST] /login
-  login = catchAsync(async (req, res) => {
-    const { phone, password } = req.body;
-    const source = req.headers['user-agent'];
+    /**
+     * [POST] /login
+     */
+    login = catchAsync(async(req, res) => {
+        const { phone, password } = req.body;
+        const source = req.headers['user-agent'];
 
-    const { accessToken, refreshToken } = await authService.login(
-      phone,
-      password,
-      source,
-    );
-    res.json({ accessToken, refreshToken });
-  });
+        const { accessToken, refreshToken } = await authService.login(
+            phone,
+            password,
+            source,
+        );
+        res.json({ accessToken, refreshToken });
+    });
 
-  // [POST] /auto-login
-  autoLogin = catchAsync(async (req, res) => {
-    const { _id, refreshToken } = req.body;
-    const source = req.headers['user-agent'];
+    /**
+     * [POST] /auto-login
+     */
+    autoLogin = catchAsync(async(req, res) => {
+        const { _id, refreshToken } = req.body;
+        const source = req.headers['user-agent'];
 
-    const authResponse = await authService.checkAndGenerateToken(
-      _id,
-      refreshToken,
-      source,
-    );
-    res.json(authResponse);
-  });
+        const authResponse = await authService.checkAndGenerateToken(
+            _id,
+            refreshToken,
+            source,
+        );
+        res.json(authResponse);
+    });
 
-  // [POST] /register
-  register = catchAsync(async (req, res, next) => {
-    const { username, phone, password } = req.body;
-    const source = req.headers['user-agent'];
+    /**
+     * [POST] /verify-phone
+     */
+    verifyPhone = catchAsync(async(req, res) => {
+        const { phone } = req.body;
+        const requestId = await authService.verifyPhone(phone);
+        res.json(requestId);
+    });
 
-    try {
-      const authResponse = await authService.register(
-        username,
-        phone,
-        password,
-        source,
-      );
+    /**
+     * [POST] /register
+     */
+    register = catchAsync(async(req, res) => {
+        const { username, code, password, phone } = req.body;
+        const source = req.headers['user-agent'];
 
-      res.json(authResponse);
-    } catch (err) {
-      next(err);
-    }
-  });
+        const authResponse = await authService.register(
+            username,
+            code,
+            phone,
+            password,
+            source,
+        );
 
-  // [POST] /refresh-token
-  refreshToken = catchAsync(async (req, res) => {
-    const { refreshToken: token } = req.body;
-    const source = req.headers['user-agent'];
+        res.json(authResponse);
+    });
 
-    const { accessToken, refreshToken } = await authService.refreshToken(
-      token,
-      source,
-    );
-    res.json({ accessToken, refreshToken });
-  });
+    /**
+     * [POST] /refresh-token
+     */
+    refreshToken = catchAsync(async(req, res) => {
+        const { refreshToken: token } = req.body;
+        const source = req.headers['user-agent'];
+
+        const { accessToken, refreshToken } = await authService.refreshToken(
+            token,
+            source,
+        );
+        res.json({ accessToken, refreshToken });
+    });
 }
 
 module.exports = new AuthController();
