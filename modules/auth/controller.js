@@ -33,24 +33,13 @@ class AuthController {
     });
 
     /**
-     * [POST] /verify-phone
-     */
-    verifyPhone = catchAsync(async(req, res) => {
-        const { phone } = req.body;
-        const requestId = await authService.verifyPhone(phone);
-        res.json(requestId);
-    });
-
-    /**
      * [POST] /register
      */
     register = catchAsync(async(req, res) => {
-        const { username, code, password, phone } = req.body;
+        const { username, password, phone } = req.body;
         const source = req.headers['user-agent'];
-
         const authResponse = await authService.register(
             username,
-            code,
             phone,
             password,
             source,

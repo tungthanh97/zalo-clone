@@ -6,5 +6,8 @@
     "BALANCE_API_URL": "http://rest.esms.vn/MainService.svc/json/GetBalance_json",
     "SMS_OTP_API_URL": "http://rest.esms.vn/MainService.svc/json/SendMultipleMessage_V4_get",
     "SMS_API_KEY": "F3574F44C81E610B9092284469EEDE",
-    "SMS_API_SECRET": "37D0F9446C85ECDD8BB35987459752"
+    "SMS_API_SECRET": "37D0F9446C85ECDD8BB35987459752",
+    "TWILIO_ACCOUNT_SID": "ACe03c7667f84c55320d87b53a9b5aa5e7",
+    "TWILIO_AUTH_TOKEN": "486b9dc25b26811ab52b36a7661a1682",
+    "TWILIO_APP_SID": "MG757cd2fb9f4edcb63064c20d716b9244"
 }
